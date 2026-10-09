@@ -41,7 +41,8 @@ public class CCTVCameraNode : HackableNode
         {
             if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
             {
-                inputService = UnityEngine.Object.FindObjectOfType<MobileInputService>();
+                var inputProvider = Object.FindObjectOfType<MobileInputProvider>();
+                if (inputProvider != null) inputService = inputProvider.GetInputService();
             }
 
             if (inputService == null)

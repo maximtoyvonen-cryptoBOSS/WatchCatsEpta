@@ -28,7 +28,8 @@ public class HackScanner : MonoBehaviour
         {
             if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
             {
-                inputService = UnityEngine.Object.FindObjectOfType<MobileInputService>();
+                var inputProvider = UnityEngine.Object.FindObjectOfType<MobileInputProvider>();
+                if (inputProvider != null) inputService = inputProvider.GetInputService();
             }
 
             if (inputService == null)

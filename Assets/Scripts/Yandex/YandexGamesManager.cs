@@ -6,12 +6,14 @@ public class YandexGamesManager : MonoBehaviour
 {
     public static YandexGamesManager Instance { get; private set; }
 
+#if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")] private static extern void YandexGames_Init();
     [DllImport("__Internal")] private static extern void YandexGames_GameplayStart();
     [DllImport("__Internal")] private static extern void YandexGames_GameplayStop();
     [DllImport("__Internal")] private static extern void YandexGames_ShowFullscreenAdv();
     [DllImport("__Internal")] private static extern void YandexGames_ShowRewardedVideo();
     [DllImport("__Internal")] private static extern int YandexGames_GetDeviceType();
+#endif
 
     public event Action OnSdkInitialized;
     private bool isInitialized = false;

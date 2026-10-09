@@ -6,8 +6,10 @@ public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem Instance { get; private set; }
 
+#if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")] private static extern void YandexGames_SaveData(string jsonData);
     [DllImport("__Internal")] private static extern void YandexGames_LoadData();
+#endif
 
     private const string LocalSaveKey = "WatchCats_SaveData";
 
