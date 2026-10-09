@@ -18,7 +18,7 @@ public class HackManager : MonoBehaviour
     {
         energyManager = GetComponent<HackingEnergy>();
         playerController = GetComponent<PlayerController>();
-        playerCamera = UnityEngine.Object.FindObjectOfType<ThirdPersonCamera>(); // Or pass via inspector
+        playerCamera = UnityEngine.Object.Object.FindObjectOfType<ThirdPersonCamera>(); // Or pass via inspector
     }
 
     private IInputService inputService;
@@ -30,7 +30,18 @@ public class HackManager : MonoBehaviour
 
     private void Start()
     {
-        inputService = new DesktopInputService();
+        if (inputService == null)
+        {
+            if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
+            {
+                inputService = Object.FindObjectOfType<MobileInputService>();
+            }
+
+            if (inputService == null)
+            {
+                inputService = new DesktopInputService();
+            }
+        }
     }
 
     private void Update()

@@ -18,10 +18,25 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        inputService = new DesktopInputService();
         if (interactionCenter == null)
         {
             interactionCenter = transform;
+        }
+    }
+
+    private void Start()
+    {
+        if (inputService == null)
+        {
+            if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
+            {
+                inputService = UnityEngine.Object.FindObjectOfType<MobileInputService>();
+            }
+
+            if (inputService == null)
+            {
+                inputService = new DesktopInputService();
+            }
         }
     }
 

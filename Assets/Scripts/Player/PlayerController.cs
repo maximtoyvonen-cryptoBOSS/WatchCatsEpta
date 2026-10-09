@@ -31,8 +31,25 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        // Using DesktopInputService by default. In a real scenario, this could be injected via DI.
-        inputService = new DesktopInputService();
+    }
+
+    private void Start()
+    {
+        // Late init of input to allow mobile setup if needed, handled by external injector or basic detection here
+        if (inputService == null)
+        {
+            if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
+            {
+                // Rely on a global DI or find the active mobile input service
+                inputService = UnityEngine.Object.FindObjectOfType<MobileInputService>();
+            }
+
+            // Fallback
+            if (inputService == null)
+            {
+                inputService = new DesktopInputService();
+            }
+        }
     }
 
     private void Update()

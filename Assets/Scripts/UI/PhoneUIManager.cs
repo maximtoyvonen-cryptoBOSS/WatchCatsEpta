@@ -19,8 +19,6 @@ public class PhoneUIManager : MonoBehaviour
 
     private void Awake()
     {
-        inputService = new DesktopInputService();
-
         // Ensure UI is hidden initially
         if (phonePanel != null)
         {
@@ -40,7 +38,20 @@ public class PhoneUIManager : MonoBehaviour
 
     private void Start()
     {
-        energyManager = UnityEngine.Object.FindObjectOfType<HackingEnergy>();
+        if (inputService == null)
+        {
+            if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
+            {
+                inputService = Object.FindObjectOfType<MobileInputService>();
+            }
+
+            if (inputService == null)
+            {
+                inputService = new DesktopInputService();
+            }
+        }
+
+        energyManager = UnityEngine.Object.Object.FindObjectOfType<HackingEnergy>();
         if (energyManager != null)
         {
             energyManager.OnEnergyChanged += UpdateEnergyUI;

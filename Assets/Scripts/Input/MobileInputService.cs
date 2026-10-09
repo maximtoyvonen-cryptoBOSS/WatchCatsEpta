@@ -2,61 +2,82 @@ using UnityEngine;
 
 public class MobileInputService : IInputService
 {
-    // Stub implementation for mobile support.
-    // In a real project, this would integrate with on-screen joysticks and buttons.
+    private VirtualJoystick joystick;
+    private TouchField touchField;
+    private VirtualButton interactButton;
+    private VirtualButton scannerButton;
+    private VirtualButton sprintButton;
+    private VirtualButton crouchButton;
+    private VirtualButton phoneButton;
+    private VirtualButton exitButton;
+
+    public MobileInputService(VirtualJoystick joystick, TouchField touchField,
+                              VirtualButton interactBtn, VirtualButton scannerBtn,
+                              VirtualButton sprintBtn, VirtualButton crouchBtn,
+                              VirtualButton phoneBtn, VirtualButton exitBtn)
+    {
+        this.joystick = joystick;
+        this.touchField = touchField;
+        this.interactButton = interactBtn;
+        this.scannerButton = scannerBtn;
+        this.sprintButton = sprintBtn;
+        this.crouchButton = crouchBtn;
+        this.phoneButton = phoneBtn;
+        this.exitButton = exitBtn;
+    }
 
     public Vector2 GetMovementInput()
     {
-        return Vector2.zero;
+        return joystick != null ? joystick.InputVector : Vector2.zero;
     }
 
     public Vector2 GetLookInput()
     {
-        return Vector2.zero;
+        return touchField != null ? touchField.TouchDist : Vector2.zero;
     }
 
     public bool IsSprinting()
     {
-        return false;
+        return sprintButton != null && sprintButton.IsPressed;
     }
 
     public bool IsCrouching()
     {
-        return false;
+        return crouchButton != null && crouchButton.IsPressed;
     }
 
     public bool IsInteractDown()
     {
-        return false;
+        return interactButton != null && interactButton.GetButtonDown();
     }
 
     public bool IsInteractHeld()
     {
-        return false;
+        return interactButton != null && interactButton.IsPressed;
     }
 
     public bool IsInteractUp()
     {
-        return false;
+        return interactButton != null && interactButton.GetButtonUp();
     }
 
     public bool IsScannerDown()
     {
-        return false;
+        return scannerButton != null && scannerButton.GetButtonDown();
     }
 
     public bool IsScannerUp()
     {
-        return false;
+        return scannerButton != null && scannerButton.GetButtonUp();
     }
 
     public bool IsExitDown()
     {
-        return false;
+        return exitButton != null && exitButton.GetButtonDown();
     }
 
     public bool IsPhoneToggleDown()
     {
-        return false;
+        return phoneButton != null && phoneButton.GetButtonDown();
     }
 }

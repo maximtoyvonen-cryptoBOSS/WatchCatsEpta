@@ -20,7 +20,22 @@ public class HackScanner : MonoBehaviour
     private void Awake()
     {
         hackManager = GetComponent<HackManager>();
-        inputService = new DesktopInputService();
+    }
+
+    private void Start()
+    {
+        if (inputService == null)
+        {
+            if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
+            {
+                inputService = UnityEngine.Object.FindObjectOfType<MobileInputService>();
+            }
+
+            if (inputService == null)
+            {
+                inputService = new DesktopInputService();
+            }
+        }
     }
 
     public void SetInputService(IInputService newService)

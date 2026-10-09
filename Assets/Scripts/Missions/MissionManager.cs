@@ -52,6 +52,11 @@ public class MissionManager : MonoBehaviour
 
         extractionUnlocked = false;
         OnMissionStarted?.Invoke(currentMission);
+
+        if (YandexGamesManager.Instance != null)
+        {
+            YandexGamesManager.Instance.GameplayStart();
+        }
     }
 
     public void UpdateObjective(string targetID)
@@ -98,6 +103,11 @@ public class MissionManager : MonoBehaviour
             Destroy(currentMission);
             currentMission = null;
             currentObjectives.Clear();
+
+            if (YandexGamesManager.Instance != null)
+            {
+                YandexGamesManager.Instance.GameplayStop();
+            }
         }
     }
 
@@ -110,6 +120,11 @@ public class MissionManager : MonoBehaviour
             Destroy(currentMission);
             currentMission = null;
             currentObjectives.Clear();
+
+            if (YandexGamesManager.Instance != null)
+            {
+                YandexGamesManager.Instance.GameplayStop();
+            }
         }
     }
 

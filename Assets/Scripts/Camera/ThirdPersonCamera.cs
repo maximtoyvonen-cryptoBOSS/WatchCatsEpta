@@ -23,12 +23,26 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void Awake()
     {
-        inputService = new DesktopInputService();
-
         // Initialize angles based on current rotation if needed, or start at 0
         Vector3 angles = transform.eulerAngles;
         currentX = angles.y;
         currentY = angles.x;
+    }
+
+    private void Start()
+    {
+        if (inputService == null)
+        {
+            if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
+            {
+                inputService = UnityEngine.Object.FindObjectOfType<MobileInputService>();
+            }
+
+            if (inputService == null)
+            {
+                inputService = new DesktopInputService();
+            }
+        }
     }
 
     private void LateUpdate()

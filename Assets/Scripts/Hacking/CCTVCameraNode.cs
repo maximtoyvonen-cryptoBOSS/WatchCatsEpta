@@ -33,8 +33,22 @@ public class CCTVCameraNode : HackableNode
         // Extract current euler angles relative to initial, or start at 0
         currentPan = 0f;
         currentTilt = 0f;
+    }
 
-        inputService = new DesktopInputService();
+    private void Start()
+    {
+        if (inputService == null)
+        {
+            if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
+            {
+                inputService = UnityEngine.Object.FindObjectOfType<MobileInputService>();
+            }
+
+            if (inputService == null)
+            {
+                inputService = new DesktopInputService();
+            }
+        }
     }
 
     public void SetInputService(IInputService newService)
