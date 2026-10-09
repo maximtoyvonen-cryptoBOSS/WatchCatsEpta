@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
     private float rotationVelocity;
     private float verticalVelocity;
 
+    private float lastNoiseTime;
+    private float noiseInterval = 0.5f;
+
+    public bool IsCrouching { get; private set; }
+    public bool IsSprinting { get; private set; }
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -42,13 +48,26 @@ public class PlayerController : MonoBehaviour
 
         // Determine current speed
         currentSpeed = walkSpeed;
-        if (inputService.IsSprinting())
+        IsSprinting = inputService.IsSprinting();
+        IsCrouching = inputService.IsCrouching();
+
+        if (IsSprinting)
         {
             currentSpeed = sprintSpeed;
         }
-        else if (inputService.IsCrouching())
+        else if (IsCrouching)
         {
             currentSpeed = crouchSpeed;
+        }
+
+        // Broadcast noise if sprinting (rate limited to avoid spamming path recalculations)
+        if (IsSprinting && direction.magnitude >= 0.1f)
+        {
+            if (Time.time - lastNoiseTime >= noiseInterval)
+            {
+                NoiseManager.MakeNoise(transform.position, 10f); // 10m noise radius
+                lastNoiseTime = Time.time;
+            }
         }
 
         if (direction.magnitude >= 0.1f)

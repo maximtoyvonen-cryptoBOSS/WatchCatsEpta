@@ -11,6 +11,8 @@ public class PlayerInteraction : MonoBehaviour
     private IInputService inputService;
     private IInteractable currentInteractable;
 
+    private Collider[] overlapResults = new Collider[10];
+
     // Event for UI to subscribe to
     public event Action<IInteractable> OnInteractableChanged;
 
@@ -38,13 +40,14 @@ public class PlayerInteraction : MonoBehaviour
 
     private void FindInteractables()
     {
-        Collider[] colliders = Physics.OverlapSphere(interactionCenter.position, interactionRadius, interactableLayer);
+        int numColliders = Physics.OverlapSphereNonAlloc(interactionCenter.position, interactionRadius, overlapResults, interactableLayer);
 
         IInteractable closestInteractable = null;
         float closestDistance = float.MaxValue;
 
-        foreach (Collider collider in colliders)
+        for (int i = 0; i < numColliders; i++)
         {
+            Collider collider = overlapResults[i];
             IInteractable interactable = collider.GetComponent<IInteractable>();
             if (interactable != null && interactable.CanInteract())
             {

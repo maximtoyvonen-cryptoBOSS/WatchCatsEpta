@@ -33,9 +33,7 @@ public class OverloadDistributor : HackableNode
 
     private void EmitNoise()
     {
-        // Logic to alert AI within noiseRadius.
-        // In a full implementation, this would interact with an AI perception system.
-        // E.g., GameManager.Instance.AlertEnemies(transform.position, noiseRadius);
+        NoiseManager.MakeNoise(transform.position, noiseRadius);
         Debug.Log($"[Hack] Distributor emitting noise in {noiseRadius}m radius");
     }
 
@@ -43,14 +41,18 @@ public class OverloadDistributor : HackableNode
     {
         Debug.Log("[Hack] Distributor Detonating!");
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, stunRadius, guardLayer);
-        foreach (var hitCollider in hitColliders)
-        {
-            // Assuming guards have some sort of IStunnable interface or GuardComponent
-            // IStunnable stunnable = hitCollider.GetComponent<IStunnable>();
-            // stunnable?.Stun(stunDuration);
+        // Zero-allocation approach preferred for WebGL
+        Collider[] hitColliders = new Collider[10];
+        int numColliders = Physics.OverlapSphereNonAlloc(transform.position, stunRadius, hitColliders, guardLayer);
 
-            Debug.Log($"[Hack] Stunned guard: {hitCollider.gameObject.name} for {stunDuration}s");
+        for (int i = 0; i < numColliders; i++)
+        {
+            IStunnable stunnable = hitColliders[i].GetComponent<IStunnable>();
+            if (stunnable != null)
+            {
+                stunnable.Stun(stunDuration);
+                Debug.Log($"[Hack] Stunned guard: {hitColliders[i].gameObject.name} for {stunDuration}s");
+            }
         }
 
         // Disable visuals/components of the distributor if destroyed
