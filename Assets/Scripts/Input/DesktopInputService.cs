@@ -40,6 +40,16 @@ public class DesktopInputService : IInputService
         return Input.GetKeyDown(KeyCode.E);
     }
 
+    public bool IsInteractHeld()
+    {
+        return Input.GetKey(KeyCode.E);
+    }
+
+    public bool IsInteractUp()
+    {
+        return Input.GetKeyUp(KeyCode.E);
+    }
+
     public bool IsScannerDown()
     {
         return Input.GetMouseButtonDown(1);
@@ -53,5 +63,10 @@ public class DesktopInputService : IInputService
     public bool IsExitDown()
     {
         return Input.GetKeyDown(KeyCode.Escape);
+    }
+
+    public bool IsPhoneToggleDown()
+    {
+        return Input.GetKeyDown(KeyCode.Tab);
     }
 }

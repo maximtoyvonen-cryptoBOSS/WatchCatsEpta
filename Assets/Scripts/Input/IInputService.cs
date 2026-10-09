@@ -7,7 +7,10 @@ public interface IInputService
     bool IsSprinting();
     bool IsCrouching();
     bool IsInteractDown();
+    bool IsInteractHeld();
+    bool IsInteractUp();
     bool IsScannerDown();
     bool IsScannerUp();
     bool IsExitDown();
+    bool IsPhoneToggleDown();
 }

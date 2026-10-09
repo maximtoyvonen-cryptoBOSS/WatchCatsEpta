@@ -30,6 +30,16 @@ public class MobileInputService : IInputService
         return false;
     }
 
+    public bool IsInteractHeld()
+    {
+        return false;
+    }
+
+    public bool IsInteractUp()
+    {
+        return false;
+    }
+
     public bool IsScannerDown()
     {
         return false;
@@ -41,6 +51,11 @@ public class MobileInputService : IInputService
     }
 
     public bool IsExitDown()
+    {
+        return false;
+    }
+
+    public bool IsPhoneToggleDown()
     {
         return false;
     }

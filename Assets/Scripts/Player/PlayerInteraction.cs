@@ -29,11 +29,24 @@ public class PlayerInteraction : MonoBehaviour
     {
         FindInteractables();
 
-        if (inputService.IsInteractDown() && currentInteractable != null)
+        if (currentInteractable != null)
         {
-            if (currentInteractable.CanInteract())
+            if (inputService.IsInteractDown() && currentInteractable.CanInteract())
             {
                 currentInteractable.Interact(gameObject);
+            }
+
+            // Continuous interaction handling
+            if (currentInteractable is DataTerminal terminal)
+            {
+                if (inputService.IsInteractHeld())
+                {
+                    terminal.ContinueDownload();
+                }
+                else if (inputService.IsInteractUp() || !terminal.CanInteract())
+                {
+                    terminal.StopDownload();
+                }
             }
         }
     }
