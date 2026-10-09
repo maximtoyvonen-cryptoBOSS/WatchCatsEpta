@@ -35,7 +35,7 @@ public class ThirdPersonCamera : MonoBehaviour
         {
             if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
             {
-                var inputProvider = Object.FindObjectOfType<MobileInputProvider>();
+                var inputProvider = UnityEngine.Object.FindAnyObjectByType<MobileInputProvider>();
                 if (inputProvider != null) inputService = inputProvider.GetInputService();
             }
 

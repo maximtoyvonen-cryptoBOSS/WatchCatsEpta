@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
+using Object = UnityEngine.Object;
 
 public class PhoneUIManager : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class PhoneUIManager : MonoBehaviour
         {
             if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
             {
-                var inputProvider = Object.FindObjectOfType<MobileInputProvider>();
+                var inputProvider = Object.FindAnyObjectByType<MobileInputProvider>();
                 if (inputProvider != null) inputService = inputProvider.GetInputService();
             }
 
@@ -52,7 +53,7 @@ public class PhoneUIManager : MonoBehaviour
             }
         }
 
-        energyManager = UnityEngine.Object.Object.FindObjectOfType<HackingEnergy>();
+        energyManager = Object.FindAnyObjectByType<HackingEnergy>();
         if (energyManager != null)
         {
             energyManager.OnEnergyChanged += UpdateEnergyUI;
@@ -68,8 +69,8 @@ public class PhoneUIManager : MonoBehaviour
         }
 
         // Find all terminals to subscribe to progress.
-        // In a real project, this might be handled via a dynamic registry or interaction event to avoid UnityEngine.Object.FindObjectsOfType
-        DataTerminal[] terminals = UnityEngine.Object.FindObjectsOfType<DataTerminal>();
+        // In a real project, this might be handled via a dynamic registry or interaction event to avoid Object.FindObjectsByType
+        DataTerminal[] terminals = Object.FindObjectsByType<DataTerminal>(FindObjectsSortMode.None);
         foreach (var terminal in terminals)
         {
             terminal.OnDownloadProgress += HandleDownloadProgress;
@@ -195,7 +196,7 @@ public class PhoneUIManager : MonoBehaviour
             MissionManager.Instance.OnMissionFailed -= MissionEndedUI;
         }
 
-        DataTerminal[] terminals = UnityEngine.Object.FindObjectsOfType<DataTerminal>();
+        DataTerminal[] terminals = Object.FindObjectsByType<DataTerminal>(FindObjectsSortMode.None);
         if (terminals != null)
         {
             foreach (var terminal in terminals)

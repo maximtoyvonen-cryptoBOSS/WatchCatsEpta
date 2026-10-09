@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
             if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
             {
                 // Rely on a global DI or find the active mobile input service
-                var inputProvider = Object.FindObjectOfType<MobileInputProvider>();
+                var inputProvider = UnityEngine.Object.FindAnyObjectByType<MobileInputProvider>();
                 if (inputProvider != null) inputService = inputProvider.GetInputService();
             }
 

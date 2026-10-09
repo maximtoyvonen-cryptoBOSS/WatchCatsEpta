@@ -16,7 +16,10 @@ public class YandexGamesManager : MonoBehaviour
 #endif
 
     public event Action OnSdkInitialized;
+    // Track if SDK is ready. Used in WebGL conditional checks to suppress CS0414 warning in editor.
+#pragma warning disable 0414
     private bool isInitialized = false;
+#pragma warning restore 0414
 
     private Action interstitialCloseCallback;
     private Action rewardedSuccessCallback;

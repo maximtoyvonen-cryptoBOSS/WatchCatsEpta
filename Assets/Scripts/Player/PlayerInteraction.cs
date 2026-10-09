@@ -30,7 +30,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (YandexGamesManager.Instance != null && YandexGamesManager.Instance.IsMobile())
             {
-                var inputProvider = UnityEngine.Object.FindObjectOfType<MobileInputProvider>();
+                var inputProvider = UnityEngine.Object.FindAnyObjectByType<MobileInputProvider>();
                 if (inputProvider != null) inputService = inputProvider.GetInputService();
             }
 
