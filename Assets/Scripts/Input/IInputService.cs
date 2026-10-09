@@ -7,4 +7,7 @@ public interface IInputService
     bool IsSprinting();
     bool IsCrouching();
     bool IsInteractDown();
+    bool IsScannerDown();
+    bool IsScannerUp();
+    bool IsExitDown();
 }

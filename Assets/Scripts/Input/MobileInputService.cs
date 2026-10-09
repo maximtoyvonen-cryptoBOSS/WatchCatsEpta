@@ -29,4 +29,19 @@ public class MobileInputService : IInputService
     {
         return false;
     }
+
+    public bool IsScannerDown()
+    {
+        return false;
+    }
+
+    public bool IsScannerUp()
+    {
+        return false;
+    }
+
+    public bool IsExitDown()
+    {
+        return false;
+    }
 }

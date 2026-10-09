@@ -39,4 +39,19 @@ public class DesktopInputService : IInputService
     {
         return Input.GetKeyDown(KeyCode.E);
     }
+
+    public bool IsScannerDown()
+    {
+        return Input.GetMouseButtonDown(1);
+    }
+
+    public bool IsScannerUp()
+    {
+        return Input.GetMouseButtonUp(1);
+    }
+
+    public bool IsExitDown()
+    {
+        return Input.GetKeyDown(KeyCode.Escape);
+    }
 }
